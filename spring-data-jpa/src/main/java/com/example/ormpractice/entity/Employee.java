@@ -1,16 +1,24 @@
 package com.example.ormpractice.entity;
 
+import org.hibernate.annotations.SelectBeforeUpdate;
+import org.springframework.data.domain.Persistable;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import java.util.Calendar;
+import javax.persistence.Transient;
+import javax.persistence.Version;
 import java.util.Date;
 
 @Entity
@@ -21,13 +29,17 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Integer id;
 
-    //@Column(name = "byteDanceId") // this is optional if column name equals to field name
+    @Column(name = "byte_dance_id", unique = true) // this is optional if column name equals to field name
     public String byteDanceId;
     public String name;
     public Integer age;
 
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinColumn(name="department_id", nullable = false)
+    private Department department;
+
     @Enumerated(EnumType.ORDINAL)
-    private Status status;
+    Status status;
 
     @Temporal(TemporalType.DATE)
     Date date;
@@ -38,11 +50,18 @@ public class Employee {
     @Temporal(TemporalType.TIMESTAMP)
     Date timestamp;
 
+    @Version
+    Integer version;
+
+    @Transient
+    boolean isNew = true;
+
     // THIS IS A MUST
     public Employee() {}
 
-    public Employee(String byteDanceId, String name, Integer age, Status status, Date date, Date time, Date timestamp) {
+    public Employee(String byteDanceId, Department department, String name, Integer age, Status status, Date date, Date time, Date timestamp) {
         this.byteDanceId = byteDanceId;
+        this.department = department;
         this.name = name;
         this.age = age;
         this.status = status;
@@ -54,7 +73,7 @@ public class Employee {
     @Override
     public String toString() {
         return String.format(
-                "Employee[id=%d, byteDanceId='%s', name='%s', age='%d', status='%s', date='%s', time='%s', timestamp='%s']",
-                id, byteDanceId, name, age, status, date, time, timestamp);
+                "Employee[id=%d, byteDanceId='%s', departmentName='%s', name='%s', age='%d', status='%s', date='%s', time='%s', timestamp='%s', version=%d]",
+                id, byteDanceId, department.departmentName, name, age, status, date, time, timestamp, version);
     }
 }
