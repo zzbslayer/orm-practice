@@ -30,5 +30,6 @@ public class SpringDataJpaApplication implements CommandLineRunner {
 //        testService.objectStatusTest();
 //        testService.optimisticLockTest();
 //        testService.fetchLazyTest();
+//        testService.transactionTest();
     }
 }

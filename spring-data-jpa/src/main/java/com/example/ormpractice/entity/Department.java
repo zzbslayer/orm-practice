@@ -1,5 +1,10 @@
 package com.example.ormpractice.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,29 +15,27 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 import java.util.Set;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "department")
 public class Department {
 
-    public Department() {}
-
-    public Department(String departmentName) {
-        this.departmentName = departmentName;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public Integer id;
+    Integer id;
 
     @Column(unique = true)
-    public String departmentName;
+    String departmentName;
 
     @Version
-    public Integer version;
+    Integer version;
 
 
     @OneToMany(mappedBy = "department")
-    public Set<Employee> employees;
+    Set<Employee> employees;
 
     @Override
     public String toString() {

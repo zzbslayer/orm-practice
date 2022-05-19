@@ -1,7 +1,9 @@
 package com.example.ormpractice.entity;
 
-import org.hibernate.annotations.SelectBeforeUpdate;
-import org.springframework.data.domain.Persistable;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -21,22 +23,25 @@ import javax.persistence.Transient;
 import javax.persistence.Version;
 import java.util.Date;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "employee")
 public class Employee {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    public Integer id;
+    Integer id;
 
     @Column(name = "byte_dance_id", unique = true) // this is optional if column name equals to field name
-    public String byteDanceId;
-    public String name;
-    public Integer age;
+    String byteDanceId;
+    String name;
+    Integer age;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="department_id", nullable = false)
-    private Department department;
+    Department department;
 
     @Enumerated(EnumType.ORDINAL)
     Status status;
@@ -55,20 +60,6 @@ public class Employee {
 
     @Transient
     boolean isNew = true;
-
-    // THIS IS A MUST
-    public Employee() {}
-
-    public Employee(String byteDanceId, Department department, String name, Integer age, Status status, Date date, Date time, Date timestamp) {
-        this.byteDanceId = byteDanceId;
-        this.department = department;
-        this.name = name;
-        this.age = age;
-        this.status = status;
-        this.date = date;
-        this.time = time;
-        this.timestamp = timestamp;
-    }
 
     @Override
     public String toString() {

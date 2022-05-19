@@ -19,6 +19,5 @@ public class JpaConfig {
         SessionFactory sessionFactory = entityManagerFactory.unwrap(SessionFactory.class);
         Session session = sessionFactory.openSession();
         return session;
-
     }
 }
