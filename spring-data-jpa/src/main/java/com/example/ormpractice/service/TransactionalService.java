@@ -118,6 +118,7 @@ public class TransactionalService {
     public void springDataObjectStatusTx() {
         System.out.println("Spring Data Object Status Test-------------------------------");
         Employee e =  employeeRepository.findByByteDanceId("001").get();
+        System.out.println(e);
         e.setName("modified name");
         System.out.println("Modify e.name as " + e.getName());
         System.out.println();

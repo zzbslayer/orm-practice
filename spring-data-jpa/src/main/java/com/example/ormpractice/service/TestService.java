@@ -74,19 +74,8 @@ public class TestService {
     }
 
     public void objectStatusTest() {
-        try {
-            transactionalService.springDataObjectStatusTx();
-        }
-        finally {
-            employeeRepository.findByByteDanceId("001").ifPresent(System.out::println);
-        }
-
-        try {
-            transactionalService.hibernateObjectStatusTx();
-        }
-        finally {
-            employeeRepository.findByByteDanceId("001").ifPresent(System.out::println);
-        }
+        transactionalService.springDataObjectStatusTx();
+        employeeRepository.findByByteDanceId("001").ifPresent(System.out::println);
     }
 
     public void lockTest() {
