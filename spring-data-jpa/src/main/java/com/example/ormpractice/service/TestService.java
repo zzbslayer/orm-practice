@@ -50,7 +50,7 @@ public class TestService {
 
     public List<Employee> findAll() {
         System.out.println("findAll():");
-        List<Employee> employees = employeeRepository.findAll();
+        List<Employee> employees = employeeRepository.findByAgeBetween(18,30);
         employees.stream().forEach(System.out::println);
 
         System.out.println();

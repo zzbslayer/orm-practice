@@ -38,7 +38,7 @@ public class TransactionalService {
         System.out.println();
 
         Department department = Department.builder().departmentName("Data Engine").build();
-
+        Department testDepartment = Department.builder().departmentName("Test Department").build();
         Date date;
         try {
             date = new SimpleDateFormat("yyyy-MM-dd").parse("2022-05-12");
@@ -69,10 +69,23 @@ public class TransactionalService {
                 .time(date)
                 .timestamp(date)
                 .build();
+        Employee hza = Employee.builder()
+                .id(3)
+                .byteDanceId("003")
+                .department(testDepartment)
+                .name("Huangziang")
+                .age(20)
+                .status(Status.NORMAL)
+                .date(date)
+                .time(date)
+                .timestamp(date)
+                .build();
 
         departmentRepository.save(department);
+        departmentRepository.save(testDepartment);
         employeeRepository.save(wxd);
         employeeRepository.save(wjs);
+        employeeRepository.save(hza);
         System.out.println();
     }
 
