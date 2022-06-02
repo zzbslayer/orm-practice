@@ -6,6 +6,10 @@ import com.example.ormpractice.repo.DepartmentRepository;
 import com.example.ormpractice.repo.EmployeeRepository;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.IllegalTransactionStateException;
 
@@ -126,5 +130,15 @@ public class TestService {
         catch (IllegalTransactionStateException e) {
             e.printStackTrace();
         }
+    }
+
+    public void pageableTest() {
+        System.out.println("Pageable test-------------------------------");
+
+        Pageable pageable = PageRequest.of( 0 , 3 , Sort.Direction.DESC, "id" );
+        Page<Employee> page = transactionalService.pageableTx(pageable);
+        System.out.println("Total pages: " + page.getTotalPages());
+        System.out.println("Total elements: " + page.getTotalElements());
+        page.stream().forEach(System.out::println);
     }
 }

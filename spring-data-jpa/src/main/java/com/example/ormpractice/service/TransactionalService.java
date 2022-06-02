@@ -7,6 +7,10 @@ import com.example.ormpractice.repo.DepartmentRepository;
 import com.example.ormpractice.repo.EmployeeRepository;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -195,5 +199,11 @@ public class TransactionalService {
     @Transactional(propagation = Propagation.MANDATORY)
     public void mandatoryTx() {
         System.out.println("mandatory");
+    }
+
+    @Transactional
+    public Page<Employee> pageableTx(Pageable pageable) {
+        Page<Employee> page = employeeRepository.findByName( "WangJiansi" ,pageable);
+        return page;
     }
 }
